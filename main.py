@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
-from limiter import is_allowed
+# from limiter import is_allowed
+from limiter_token_bucket import is_allowed
 
 app = FastAPI()
 
@@ -8,7 +9,7 @@ app = FastAPI()
 async def check_rate(request: Request):
     client_ip = request.client.host
     response = is_allowed(client_ip)
-
+    
     if response:
         return JSONResponse(content={"message": "allowed"}, status_code=200)
     else:

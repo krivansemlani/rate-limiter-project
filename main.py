@@ -4,6 +4,9 @@ from fastapi.responses import JSONResponse
 from limiter_token_bucket import is_allowed
 
 app = FastAPI()
+from prometheus_fastapi_instrumentator import Instrumentator
+
+Instrumentator().instrument(app).expose(app)
 
 @app.get("/check")
 async def check_rate(request: Request):
